@@ -1,5 +1,6 @@
 package com.ilyassan.clustereddatawarehousefx.dto;
 
+import com.ilyassan.clustereddatawarehousefx.validation.ValidCurrency;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -24,11 +25,13 @@ public class DealRequest {
 
     @NotBlank(message = "From currency code is required")
     @Size(min = 3, max = 3, message = "Currency code must be exactly 3 characters")
+    @ValidCurrency(message = "From currency code must be a valid ISO 4217 currency code")
     @Schema(description = "ISO 4217 currency code for the ordering currency", example = "USD", required = true)
     private String fromCurrencyCode;
 
     @NotBlank(message = "To currency code is required")
     @Size(min = 3, max = 3, message = "Currency code must be exactly 3 characters")
+    @ValidCurrency(message = "To currency code must be a valid ISO 4217 currency code")
     @Schema(description = "ISO 4217 currency code for the target currency", example = "EUR", required = true)
     private String toCurrencyCode;
 
