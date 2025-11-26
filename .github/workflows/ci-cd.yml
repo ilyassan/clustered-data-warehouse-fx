@@ -11,21 +11,6 @@ jobs:
     name: Build and Test
     runs-on: ubuntu-latest
 
-    services:
-      postgres:
-        image: postgres:16-alpine
-        env:
-          POSTGRES_DB: fx_deals_warehouse
-          POSTGRES_USER: fxuser
-          POSTGRES_PASSWORD: fxpass123
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -47,10 +32,6 @@ jobs:
 
       - name: Run tests
         run: mvn clean test
-        env:
-          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/fx_deals_warehouse
-          SPRING_DATASOURCE_USERNAME: fxuser
-          SPRING_DATASOURCE_PASSWORD: fxpass123
 
       - name: Build application
         run: mvn clean package -DskipTests
