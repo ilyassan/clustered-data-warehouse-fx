@@ -6,6 +6,8 @@ import com.ilyassan.clustereddatawarehousefx.dto.DealResponse;
 import com.ilyassan.clustereddatawarehousefx.entity.Deal;
 import com.ilyassan.clustereddatawarehousefx.mapper.DealMapper;
 import com.ilyassan.clustereddatawarehousefx.repository.DealRepository;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -14,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +25,7 @@ public class DealServiceImpl implements DealService {
 
     private final DealRepository dealRepository;
     private final DealMapper dealMapper;
+    private final Validator validator;
 
     @Override
     @Transactional
@@ -45,6 +49,18 @@ public class DealServiceImpl implements DealService {
 
         for (DealRequest dealRequest : dealRequests) {
             try {
+                Set<ConstraintViolation<DealRequest>> violations = validator.validate(dealRequest);
+                if (!violations.isEmpty()) {
+                    ConstraintViolation<DealRequest> firstViolation = violations.iterator().next();
+                    failures.add(DealImportResult.DealFailure.builder()
+                            .dealUniqueId(dealRequest.getDealUniqueId())
+                            .reason(firstViolation.getMessage())
+                            .field(firstViolation.getPropertyPath().toString())
+                            .build());
+                    log.warn("Validation failed for deal with ID: {} - {}", dealRequest.getDealUniqueId(), firstViolation.getMessage());
+                    continue;
+                }
+
                 if (dealRepository.existsByDealUniqueId(dealRequest.getDealUniqueId())) {
                     failures.add(DealImportResult.DealFailure.builder()
                             .dealUniqueId(dealRequest.getDealUniqueId())
