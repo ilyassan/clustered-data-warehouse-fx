@@ -103,10 +103,14 @@ jobs:
           script: |
             cd /opt/fx-deals-app
             docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-            docker-compose pull
-            docker-compose up -d
+            docker-compose pull fx-deals-app
+            docker-compose stop fx-deals-app
+            docker-compose rm -f fx-deals-app
+            docker-compose up -d fx-deals-app
             docker image prune -f
             echo "Deployment completed successfully!"
+            sleep 10
+            docker-compose ps
 
   code-quality:
     name: Code Quality Analysis
