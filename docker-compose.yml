@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   postgres:
     image: postgres:16-alpine
@@ -19,6 +17,24 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+  fx-deals-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fx-deals-app
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/fx_deals_warehouse
+      SPRING_DATASOURCE_USERNAME: fxuser
+      SPRING_DATASOURCE_PASSWORD: fxpass123
+    ports:
+      - "8080:8080"
+    networks:
+      - fx-network
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
 
 volumes:
   postgres_data:
