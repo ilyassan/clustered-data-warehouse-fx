@@ -1,0 +1,61 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001-create-deals-table
+      author: ilyassan
+      changes:
+        - createTable:
+            tableName: deals
+            columns:
+              - column:
+                  name: deal_unique_id
+                  type: VARCHAR(100)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: from_currency_code
+                  type: VARCHAR(3)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: to_currency_code
+                  type: VARCHAR(3)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: deal_timestamp
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: deal_amount
+                  type: DECIMAL(19,4)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+
+        - createIndex:
+            indexName: idx_deal_timestamp
+            tableName: deals
+            columns:
+              - column:
+                  name: deal_timestamp
+
+        - createIndex:
+            indexName: idx_from_currency
+            tableName: deals
+            columns:
+              - column:
+                  name: from_currency_code
+
+        - createIndex:
+            indexName: idx_to_currency
+            tableName: deals
+            columns:
+              - column:
+                  name: to_currency_code
