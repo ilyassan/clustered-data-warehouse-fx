@@ -87,33 +87,82 @@ git clone https://github.com/ilyassan/clustered-data-warehouse-fx.git
 cd clustered-data-warehouse-fx
 ```
 
-#### 2. Start PostgreSQL Database
+#### 2. Run the Application
+
+Choose one of the following methods:
+
+##### **Option A: Using Make (Recommended - Easiest)**
+
+If you have Make installed:
 
 ```bash
-docker-compose up -d postgres
+# Build Docker images and start all services (PostgreSQL + Application)
+make docker-start
 ```
 
-This starts PostgreSQL on port `5455`.
+The application will be available at `http://localhost:8080`
 
-#### 3. Build the Application
+**Other useful Make commands:**
+```bash
+make help             # Show all available commands
+make docker-down      # Stop all services
+make docker-logs      # View application logs
+make docker-restart   # Restart the application
+```
+
+**Installing Make:**
+- **Windows**: `choco install make` or use Git Bash (comes with Git for Windows)
+- **Mac**: Already included with Xcode Command Line Tools
+- **Linux**: `sudo apt-get install make`
+
+##### **Option B: Using Docker Compose (Manual)**
+
+If you don't have Make installed:
 
 ```bash
-mvn clean install
+# Build and start all services
+docker-compose build
+docker-compose up -d
 ```
 
-#### 4. Run the Application
+The application will be available at `http://localhost:8080`
 
+**Useful Docker commands:**
 ```bash
-mvn spring-boot:run
+docker-compose down              # Stop all services
+docker-compose logs -f fx-deals-app  # View application logs
+docker-compose restart fx-deals-app  # Restart the application
 ```
+
+##### **Option C: Local Development (Without Docker)**
+
+For local development without Docker:
+
+1. **Start PostgreSQL Database:**
+   ```bash
+   docker-compose up -d postgres
+   ```
+   This starts PostgreSQL on port `5455`.
+
+2. **Build the Application:**
+   ```bash
+   mvn clean install
+   ```
+
+3. **Run the Application:**
+   ```bash
+   mvn spring-boot:run
+   ```
+   Or with Make: `make start`
 
 The application starts on `http://localhost:8080`
 
-#### 5. Verify Installation
+#### 3. Verify Installation
 
 Open your browser:
 - **Swagger UI**: http://localhost:8080/swagger-ui.html
 - **Health Check**: http://localhost:8080/actuator/health
+- **API Welcome**: http://localhost:8080/
 
 ---
 
