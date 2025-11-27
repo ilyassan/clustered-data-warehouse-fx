@@ -11,6 +11,21 @@ A production-ready Spring Boot application for importing, validating, and managi
 
 ---
 
+## 🌐 Live Demo
+
+**The application is deployed and running on a production VPS!**
+
+🔗 **Live URL:** [https://ilyassanida.com](https://ilyassanida.com)
+
+**Available Endpoints:**
+- **API**: https://ilyassanida.com/api/deals
+- **Swagger UI**: https://ilyassanida.com/swagger-ui.html
+- **Health Check**: https://ilyassanida.com/actuator/health
+
+**Deployment:** Automated CI/CD pipeline with GitHub Actions deploys on every push to `main` branch.
+
+---
+
 ## 🚀 Features
 
 - **RESTful API** - Complete CRUD operations for FX deals
@@ -52,21 +67,6 @@ A production-ready Spring Boot application for importing, validating, and managi
 | **Testing** | JUnit 5, Mockito, Spring Boot Test, JaCoCo |
 | **Containerization** | Docker, Docker Compose |
 | **CI/CD** | GitHub Actions |
-
----
-
-## 🌐 Live Demo
-
-**The application is deployed and running on a production VPS!**
-
-🔗 **Live URL:** [https://ilyassanida.com](https://ilyassanida.com)
-
-**Available Endpoints:**
-- **API**: https://ilyassanida.com/api/deals
-- **Swagger UI**: https://ilyassanida.com/swagger-ui.html
-- **Health Check**: https://ilyassanida.com/actuator/health
-
-**Deployment:** Automated CI/CD pipeline with GitHub Actions deploys on every push to `main` branch.
 
 ---
 
