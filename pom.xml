@@ -149,6 +149,18 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>${jacoco.version}</version>
+                <configuration>
+                    <excludes>
+                        <!-- Exclude classes with no business logic -->
+                        <exclude>**/ClusteredDataWarehouseFxApplication.class</exclude>
+                        <exclude>**/WelcomeController.class</exclude>
+                        <exclude>**/GlobalExceptionHandler.class</exclude>
+                        <exclude>**/ErrorResponse.class</exclude>
+                        <exclude>**/config/**</exclude>
+                        <exclude>**/dto/**</exclude>
+                        <exclude>**/entity/**</exclude>
+                    </excludes>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>
