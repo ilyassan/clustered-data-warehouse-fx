@@ -28,8 +28,8 @@ RUN addgroup -S spring && adduser -S spring -G spring
 # Copy the JAR from build stage
 COPY --from=build /app/target/*.jar app.jar
 
-# Change ownership
-RUN chown spring:spring app.jar
+# Create logs directory and set ownership
+RUN mkdir -p /app/logs && chown -R spring:spring /app
 
 # Switch to non-root user
 USER spring:spring
