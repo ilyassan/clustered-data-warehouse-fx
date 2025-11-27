@@ -1,6 +1,6 @@
 package com.ilyassan.clustereddatawarehousefx.controller;
 
-import io.swagger.v3.oas.annotations.Hidden;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,10 +11,12 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/")
+@Slf4j
 public class WelcomeController {
 
     @GetMapping
     public ResponseEntity<Map<String, Object>> welcome() {
+        log.info("Welcome endpoint accessed - Returning API information");
         Map<String, Object> response = new LinkedHashMap<>();
 
         response.put("message", "Welcome to Bloomberg FX Deals Data Warehouse API");
